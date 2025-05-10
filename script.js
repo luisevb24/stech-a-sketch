@@ -18,6 +18,9 @@ eraser.addEventListener('click', ()=>{
     emptyGrid(container);
     createGrid(currentGridSize);
 })
+
+
+
 //main function
 function createGrid(gridSize = 16) {
     if (gridSize > 100){
@@ -47,7 +50,12 @@ function makeSquaresPaintable() {
     let gridSquareNodes = document.querySelectorAll(".gridSquare");
     for (let square of gridSquareNodes) {
         square.addEventListener('mouseenter', () => {
-            square.style.backgroundColor = "black";
+            let currentOpacity = parseFloat(square.style.opacity) || 0;
+            if(currentOpacity < 1){
+                currentOpacity += 0.1;
+                square.style.opacity = currentOpacity;
+            }
+            square.style.backgroundColor = getRandomColor();
             console.log('mouseenter event fired');
         })
     }
@@ -56,6 +64,13 @@ function emptyGrid(container) {
     while (container.firstElementChild) {
         container.firstElementChild.remove();
     }
+}
+
+function getRandomColor(){
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return  `rgb(${r}, ${g}, ${b})`; 
 }
 
 
